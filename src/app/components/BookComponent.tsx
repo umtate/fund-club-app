@@ -57,13 +57,7 @@ const BookComponent = () => {
               </p>
             </div>
 
-            <Button
-              variant="secondary"
-              className="product__btn bg-black text-white py-3 px-6 hover:bg-white hover:text-black transition-all border border-black"
-            >
-              {" "}
-              Add to Cart
-            </Button>
+            <Button>Add to Cart</Button>
           </div>
         </div>
       </div>

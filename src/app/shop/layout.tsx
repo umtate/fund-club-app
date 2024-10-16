@@ -2,6 +2,13 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Sidebar } from "../components/Sidebar";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "Funda Club App",
+  description: "Join the Literary Adventure.",
+};
 
 export default function DashboardLayout({
   children,

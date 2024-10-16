@@ -1,8 +1,5 @@
-
-import { Button } from "@/components/ui/button"
+import OrdersComponent from "@/app/components/OrdersComponent";
 
 export default function OrdersPage() {
-  return <>       
-  <Button>Click me</Button>
-</>;
+  return <OrdersComponent />;
 }
