@@ -1,5 +1,9 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { useRouter } from 'next/navigation'
+
 
 const bgColors = [
   "bg-purple-300",
@@ -18,6 +22,8 @@ interface BookListProps {
 }
 
 const BooksListComponent = ({ books }: BookListProps) => {
+  const router = useRouter()
+
   return (
     <main className="mt-4 font-sans flex flex-wrap justify-evenly items-center">
       {books.map((book, index) => {
@@ -41,6 +47,9 @@ const BooksListComponent = ({ books }: BookListProps) => {
               <Button
                 className="mt-4 bg-white text-gray-700 font-bold py-2 px-4 rounded-lg hover:text-purple-500"
                 variant="outline"
+                onClick={() => {
+                  router.push('/shop/products/xxxxx');
+                }}
               >
                 See the Book
               </Button>
