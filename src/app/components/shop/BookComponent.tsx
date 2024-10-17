@@ -11,8 +11,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
+import { Book_v2 } from "@/app/types/Book";
 
-export function BookComponent() {
+interface Props {
+  book: Book_v2
+}
+
+export function BookComponent({book} : Props) {
   const router = useRouter();
 
   return (
@@ -39,21 +44,19 @@ export function BookComponent() {
       <div className="product-top flex flex-col md:flex-row gap-6">
         <div className="md:w-1/2">
           <img
-            src="https://images-na.ssl-images-amazon.com/images/I/81djg0KWthS.jpg"
+            src={book?.image}
             alt="Product Image 1"
             className="w-1/2 rounded-lg transition-transform transform hover:scale-105 shadow-md"
           />
         </div>
         <div className="relative md:w-2/3">
           <div className="sticky top-0 py-16">
-            <h1 className="text-2xl font-bold mb-6">Product Name</h1>
-            <p className="text-xl mb-6">$790.00</p>
+            <h1 className="text-2xl font-bold mb-6">{book?.title}</h1>
+            <p className="text-xl mb-6">{book?.authors}</p>
+            <p className="text-xl mb-6">${book?.price}</p>
             <div className="mb-6 text-gray-700">
               <p>
-                The Faithless Thermal Windbreaker brings the cold during and
-                after all your workouts. Its composed of thermal fabric with a
-                lightweight insulation padding neatly tucked away to keep you
-                warm and dry for good.
+                  {book?.description}
               </p>
             </div>
 

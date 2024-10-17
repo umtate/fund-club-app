@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useRouter } from 'next/navigation'
-import { Book } from "@/app/types/Book";
+import { Book_v2 } from "@/app/types/Book";
 
 
 const bgColors = [
@@ -19,7 +19,7 @@ const getRandomColor = () => {
 };
 
 interface BookListProps {
-  books: Book[];
+  books: Book_v2[];
 }
 
 export function BooksListComponent ({ books }: BookListProps){
@@ -42,14 +42,14 @@ export function BooksListComponent ({ books }: BookListProps){
             />
             <div className="descp p-4 text-white">
               <h2 className="book-name text-lg font-bold">{book?.title}</h2>
-              <h3 className="author text-md">{book?.author}</h3>
-              <h3 className="rating text-md">{book?.summary}</h3>
-              <p className="info text-sm">{book?.genre}</p>
+              <h3 className="author text-md">{book?.authors}</h3>
+              <h3 className="rating text-md">{ book?.description.substring(0, 80)}</h3>
+              <p className="info text-sm">{book?.isbn}</p>
               <Button
                 className="mt-4 bg-white text-gray-700 font-bold py-2 px-4 rounded-lg hover:text-purple-500"
                 variant="outline"
                 onClick={() => {
-                  router.push('/shop/products/xxxxx');
+                  router.push(`/shop/products/${book.id}`);
                 }}
               >
                 See the Book
