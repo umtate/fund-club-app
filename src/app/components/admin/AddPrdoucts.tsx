@@ -1,5 +1,7 @@
 "use client";
 
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,8 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { Textarea } from "@/components/ui/textarea";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required(),
@@ -20,10 +21,11 @@ const validationSchema = Yup.object().shape({
   publisher: Yup.string().required(),
   genre: Yup.string().required(),
   edition: Yup.string().required(),
+  summary: Yup.string().required(),
   numberOfPages: Yup.number().required(),
   quantity: Yup.number().required(),
   price: Yup.string().required(),
-  picture: Yup.string().required(),
+  image: Yup.string(),
 });
 
 export function AppProductsComponent() {
@@ -36,13 +38,21 @@ export function AppProductsComponent() {
       genre: "",
       edition: "",
       numberOfPages: "",
+      summary: "",
       quantity: "",
       price: "",
-      picture: "",
+      image: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      fetch("/api/books", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values, null, 2),
+      }).then((res) => res.json());
     },
   });
 
@@ -188,10 +198,20 @@ export function AppProductsComponent() {
               ) : null}{" "}
             </div>
           </div>
+          <div className="grid gap-2 my-3 mx-3 ">
+            <Label htmlFor="summary">Summary</Label>
+
+            <Textarea
+              placeholder="Type book summary here."
+              name="summary"
+              onChange={formik.handleChange}
+              value={formik.values.summary}
+            />
+          </div>
 
           <div className="grid gap-2 my-3 mx-3 w-1/2 ">
-            <Label htmlFor="picture">Upload Image</Label>
-            <Input id="picture" type="file" />
+            <Label htmlFor="image">Upload Image</Label>
+            <Input id="image" type="file" />
           </div>
         </CardContent>
         <CardFooter className="flex justify-end my-4">
