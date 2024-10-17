@@ -47,7 +47,6 @@ export function AppProductsComponent() {
 
       <form onSubmit={formik.handleSubmit}>
         <CardContent className="grid gap-6">
-
           <div className="flex">
             <div className="py-1.25 mx-3 px-0.75 items-center  w-1/2 md:w-full">
               <Label htmlFor="isbn">ISBN</Label>
@@ -64,7 +63,7 @@ export function AppProductsComponent() {
             </div>
           </div>
 
-	  <div className="flex">
+          <div className="flex">
             <div className="py-1.25 mx-3 px-0.75 items-center  w-1/2 md:w-full">
               <Label htmlFor="price">Price</Label>
               <Input

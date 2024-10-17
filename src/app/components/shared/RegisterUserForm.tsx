@@ -14,19 +14,23 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const validationSchema = Yup.object().shape({
   email: Yup.string().required(),
   password: Yup.string().required(),
+  lastName: Yup.string().required(),
+  firstName: Yup.string().required(),
 });
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function RegisterUserForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      lastName: "",
+      firstName: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      fetch("/api/login", {
+      fetch("/api/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -41,6 +45,37 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={formik.handleSubmit}>
         <div className="grid gap-2">
+          <div className="grid gap-1">
+            <Label className="sr-only" htmlFor="firstName">
+              First Name
+            </Label>
+            <Input
+              id="firstName"
+              type="text"
+              name="firstName"
+              placeholder="first name"
+              autoCapitalize="none"
+              autoCorrect="off"
+              disabled={isLoading}
+              onChange={formik.handleChange}
+              value={formik.values.firstName}
+            />
+          </div>
+          <div className="grid gap-1 my-4">
+            <Label className="sr-only" htmlFor="lastName">
+              Last Name
+            </Label>
+            <Input
+              id="lastName"
+              type="text"
+              name="lastName"
+              placeholder="last name"
+              autoCapitalize="none"
+              disabled={isLoading}
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </div>
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
               Email
@@ -76,7 +111,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign In
+            Sign Up
           </Button>
         </div>
       </form>
