@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useRouter } from "next/navigation";
 
-const ShoppingCartComponent = () => {
+export function ShoppingCartComponent() {
   const router = useRouter();
   return (
     <div className="shopping-cart">
@@ -45,6 +45,6 @@ const ShoppingCartComponent = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ShoppingCartComponent;

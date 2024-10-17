@@ -1,9 +1,16 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function ShippingComponent() {
   return (
@@ -23,7 +30,7 @@ export function ShippingComponent() {
           <Label htmlFor="lastName">Last name</Label>
           <Input id="lastName" type="text" />
         </div>
-	<div className="grid gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="address">Address</Label>
           <Input id="address" type="text" />
         </div>
@@ -31,7 +38,7 @@ export function ShippingComponent() {
           <Label htmlFor="company">Company</Label>
           <Input id="company" type="text" />
         </div>
-	<div className="grid gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="postCode">Postal code</Label>
           <Input id="postCode" type="text" />
         </div>
@@ -39,15 +46,14 @@ export function ShippingComponent() {
           <Label htmlFor="city">City</Label>
           <Input id="city" type="text" />
         </div>
-	<div className="grid gap-2">
+        <div className="grid gap-2">
           <Label htmlFor="Country">Country</Label>
           <Input id="Country" type="text" />
         </div>
-
       </CardContent>
       <CardFooter>
         <Button className="w-full">Continue to payment</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

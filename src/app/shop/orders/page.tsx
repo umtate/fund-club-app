@@ -1,4 +1,4 @@
-import OrdersComponent from "@/app/components/OrdersComponent";
+import OrdersComponent from "@/app/components/shop/OrdersComponent";
 
 export default function OrdersPage() {
   return <OrdersComponent />;

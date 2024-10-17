@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation'
 
 
 const bgColors = [
-  "bg-purple-300",
-  "bg-purple-300",
-  "bg-pink-300",
-  "bg-blue-300",
-  "bg-yellow-300",
+  "bg-purple-400",
+  "bg-purple-400",
+  "bg-pink-400",
+  "bg-blue-400",
+  "bg-yellow-400",
 ];
 
 const getRandomColor = () => {
@@ -21,7 +21,7 @@ interface BookListProps {
   books: any[];
 }
 
-const BooksListComponent = ({ books }: BookListProps) => {
+export function BooksListComponent ({ books }: BookListProps){
   const router = useRouter()
 
   return (
@@ -60,5 +60,3 @@ const BooksListComponent = ({ books }: BookListProps) => {
     </main>
   );
 };
-
-export default BooksListComponent;

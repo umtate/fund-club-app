@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
 
-const BookComponent = () => {
+export function BookComponent() {
   const router = useRouter();
 
   return (
@@ -57,7 +57,7 @@ const BookComponent = () => {
               </p>
             </div>
 
-            <Button>Add to Cart</Button>
+            <Button>Borrow</Button>
           </div>
         </div>
       </div>
@@ -74,4 +74,3 @@ const BookComponent = () => {
   );
 };
 
-export default BookComponent;
