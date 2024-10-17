@@ -37,7 +37,7 @@ const handlePostRequest = async (req: NextApiRequest, res: NextApiResponse) => {
       expiresIn: "1h",
     });
 
-    res.setHeader("Set-Cookie", [`token=${token}; HttpOnly; Secure; Path=/`]);
+    res.setHeader("Set-Cookie", [`aRM41woFwMRJBAn4x3m=${token}; HttpOnly; Secure; Path=/`]);
 
     res.status(200).json("logeed in");
   } catch (error) {

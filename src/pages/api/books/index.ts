@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case "POST":
       const postRes = await handlePostRequest(req);
-      res.status(200).json(JSON.stringify(postRes));
+      res.status(200).json(postRes);
       break;
     case "GET":
       const getRes = await handleGetRequest();

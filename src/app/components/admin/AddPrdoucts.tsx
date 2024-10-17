@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Icons } from "@/components/ui/icons";
 
 const validationSchema = Yup.object().shape({
   isbn: Yup.string().required(),
@@ -20,6 +23,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export function AppProductsComponent() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       isbn: "",
@@ -28,6 +33,7 @@ export function AppProductsComponent() {
     },
     validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       fetch("/api/books", {
         method: "POST",
         headers: {
@@ -35,7 +41,15 @@ export function AppProductsComponent() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
-      }).then((res) => res.json());
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsLoading(false);
+          router.push(`/shop/products/${data?.id}`);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
   });
 
@@ -93,9 +107,14 @@ export function AppProductsComponent() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end my-4">
-          <Button className="mx-3" type="submit">
+
+        <Button disabled={isLoading} className="mx-3" type="submit">
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Add book
           </Button>
+
         </CardFooter>
       </form>
     </Card>

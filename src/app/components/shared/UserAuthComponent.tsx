@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { AuthContext } from "./auth/AuthProvider";
+import { useRouter } from "next/navigation";
+import { Actions } from "./auth/actions";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -19,6 +22,9 @@ const validationSchema = Yup.object().shape({
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  const authContext = React.useContext(AuthContext);
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,6 +32,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
     validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       fetch("/api/login", {
         method: "POST",
         headers: {
@@ -33,7 +40,19 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
-      }).then((res) => res.json());
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsLoading(false);
+          authContext.dispatch({
+            type: Actions.LOG_IN,
+            payload: data,
+          });
+          router.push("/shop/products");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
   });
 

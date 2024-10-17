@@ -30,6 +30,7 @@ export function RegisterUserForm({ className, ...props }: UserAuthFormProps) {
     },
     validationSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       fetch("/api/register", {
         method: "POST",
         headers: {
@@ -37,7 +38,10 @@ export function RegisterUserForm({ className, ...props }: UserAuthFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
-      }).then((res) => res.json());
+      }).then((res) => {
+        res.json();
+        setIsLoading(false);
+      });
     },
   });
 
