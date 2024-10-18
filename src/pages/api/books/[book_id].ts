@@ -14,7 +14,7 @@ export default async function handler(
       res.status(405).end(`Method ${req.method} Not Allowed`);
       break;
     case "GET":
-      const getRes = await handleGetRequest(book_id as string ?? "");
+      const getRes = await handleGetRequest((book_id as string) ?? "");
       res.status(200).json(getRes);
       break;
     default:
@@ -24,11 +24,15 @@ export default async function handler(
 }
 
 const handleGetRequest = async (id: string) => {
-  const result = await fetch(`${PRODUCTS_URL}/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return result.json();
+  try {
+    const result = await fetch(`${PRODUCTS_URL}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return result.json();
+  } catch (e) {
+    console.log("Error fetching book", e);
+  }
 };
