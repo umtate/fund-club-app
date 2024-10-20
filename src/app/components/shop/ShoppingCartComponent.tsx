@@ -21,6 +21,9 @@ export function ShoppingCartComponent() {
       .then((res) => res.json())
       .then((data) => {
         setCartItems(data);
+      })
+      .catch((e) => {
+        console.log("An error occured", e);
       });
   }, []);
 
@@ -36,6 +39,9 @@ export function ShoppingCartComponent() {
       .then((res) => res.json())
       .then((data) => {
         setCartItems(data);
+      })
+      .catch((e) => {
+        console.log("An error occured", e);
       });
   };
 
@@ -49,9 +55,12 @@ export function ShoppingCartComponent() {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         setIsLoading(false);
         router.push("/shop/orders");
+      })
+      .catch((e) => {
+        console.log("An error occured", e);
       });
   };
 
@@ -64,42 +73,54 @@ export function ShoppingCartComponent() {
       </div>
 
       <h1 className="text-2xl font-light">Shopping Cart</h1>
-
-      <div className="hidden md:grid grid-cols-4 text-gray-600 py-4 border-b border-gray-300">
-        <span>Product</span>
-        <span>Price</span>
-        <span>Remove</span>
-        <span className="text-right">Total</span>
-      </div>
-
-      {cartItems?.map((item) => {
-        return (
-          <div className="grid grid-cols-12 items-center py-4 border-b border-gray-300">
-            <div className="col-span-3">
-              <img src={item?.image} alt={item?.title} className="w-24" />
-              <div className="font-bold mt-4">{item?.title}</div>
-            </div>
-            <div className="col-span-3">${item?.price}</div>
-
-            <div className="col-span-1">
-              <Button
-                variant="destructive"
-                onClick={() => handleRemoveItem(item)}
-              >
-                Remove
-              </Button>
-            </div>
-            <div className="text-right col-span-5">${item?.price}</div>
+      {!!cartItems?.length ? (
+        <>
+          <div className="hidden md:grid grid-cols-4 text-gray-600 py-4 border-b border-gray-300">
+            <span>Product</span>
+            <span>Price</span>
+            <span>Remove</span>
+            <span className="text-right">Total</span>
           </div>
-        );
-      })}
 
-      <div className="text-right py-8">
-        <Button onClick={() => handleCheckout()} disabled={isLoading}>
-          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Checkout
-        </Button>
-      </div>
+          {cartItems?.map((item, ind) => {
+            return (
+              <div
+                className="grid grid-cols-12 items-center py-4 border-b border-gray-300"
+                key={ind}
+              >
+                <div className="col-span-3">
+                  <img src={item?.image} alt={item?.title} className="w-24" />
+                  <div className="font-bold mt-4">{item?.title}</div>
+                </div>
+                <div className="col-span-3">${item?.price}</div>
+
+                <div className="col-span-1">
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleRemoveItem(item)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+                <div className="text-right col-span-5">${item?.price}</div>
+              </div>
+            );
+          })}
+
+          <div className="text-right py-8">
+            <Button onClick={() => handleCheckout()} disabled={isLoading}>
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Checkout
+            </Button>
+          </div>
+        </>
+      ) : (
+        <div className="wrapper text-center mx-auto w-full max-w-6xl p-4">
+          <p>Empty Cart</p>
+        </div>
+      )}
     </div>
   );
 }
