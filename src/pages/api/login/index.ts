@@ -1,9 +1,11 @@
-import * as jwt from "jsonwebtoken";
+import 'server-only';
+
+import { encrypt } from "@/functions";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const USERS_URL: string = process.env.USERS_BASE_URL || "";
-const APP_SECRET: string = process.env.APP_SECRET || "";
+const AUTH_TOKEN: string = process.env.AUTH_TOKEN || "";
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,6 +20,7 @@ export default async function handler(
       break;
   }
 }
+
 const handlePostRequest = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const result = await fetch(`${USERS_URL}/${req.body.email}`);
@@ -33,13 +36,12 @@ const handlePostRequest = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!isMatch) return res.status(400).json("Incorrect password");
 
-    const token = jwt.sign({ id: user?.uuid }, APP_SECRET, {
-      expiresIn: "1h",
-    });
+    const session = await encrypt({ id: user.uuid });
 
-    res.setHeader("Set-Cookie", [`aRM41woFwMRJBAn4x3m=${token}; HttpOnly; Secure; Path=/`]);
+    res.setHeader("Set-Cookie", [`${AUTH_TOKEN}=${session}; HttpOnly; Secure; Path=/`]);
 
     res.status(200).json("logeed in");
+
   } catch (error) {
     res.status(500).json(`Login error ${error}`);
   }

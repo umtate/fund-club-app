@@ -41,7 +41,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         },
         body: JSON.stringify(values, null, 2),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 200) return res.json();
+          throw Error;
+        })
         .then((data) => {
           setIsLoading(false);
           authContext.dispatch({
@@ -50,6 +53,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           });
           router.push("/shop/products");
         })
+        .catch((err) => console.log(err))
         .finally(() => {
           setIsLoading(false);
         });
