@@ -3,9 +3,12 @@
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Icons } from "@/components/ui/icons";
 
 export function ShoppingCartComponent() {
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/cart", {
@@ -36,7 +39,22 @@ export function ShoppingCartComponent() {
       });
   };
 
-  const router = useRouter();
+  const handleCheckout = () => {
+    setIsLoading(true);
+    fetch("/api/cart/checkout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoading(false);
+        router.push("/shop/orders");
+      });
+  };
+
   return (
     <div className="shopping-cart">
       <div className="mb-8">
@@ -77,7 +95,10 @@ export function ShoppingCartComponent() {
       })}
 
       <div className="text-right py-8">
-        <Button>Checkout</Button>
+        <Button onClick={() => handleCheckout()} disabled={isLoading}>
+          {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+          Checkout
+        </Button>
       </div>
     </div>
   );
