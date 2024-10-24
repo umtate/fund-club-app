@@ -28,7 +28,7 @@ const handleGetRequest = async (id: string) => {
     const result = await fetch(`${PRODUCTS_URL}/${id}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
     });
     return result.json();

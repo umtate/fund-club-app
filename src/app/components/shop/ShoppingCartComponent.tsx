@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
+import { Book } from "@/lib/definitions";
 
 export function ShoppingCartComponent() {
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
 
@@ -15,7 +16,7 @@ export function ShoppingCartComponent() {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
     })
       .then((res) => res.json())
@@ -27,12 +28,12 @@ export function ShoppingCartComponent() {
       });
   }, []);
 
-  const handleRemoveItem = (item: any) => {
+  const handleRemoveItem = (item: Book) => {
     fetch("/api/cart/remove", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(item),
     })
@@ -51,7 +52,7 @@ export function ShoppingCartComponent() {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
     })
       .then((res) => res.json())

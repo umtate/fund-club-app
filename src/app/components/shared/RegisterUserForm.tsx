@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserAuthFormProps = React.InputHTMLAttributes<HTMLInputElement>
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required(),
@@ -35,7 +36,7 @@ export function RegisterUserForm({ className, ...props }: UserAuthFormProps) {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
       }).then((res) => {

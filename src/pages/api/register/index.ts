@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs"
 import { NextApiRequest, NextApiResponse } from "next";
 
 const USERS_URL: string = process.env.USERS_BASE_URL || "";
@@ -25,7 +25,7 @@ async function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify({...req.body, hashedPassword}),
     });

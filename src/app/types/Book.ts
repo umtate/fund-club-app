@@ -1,43 +1,6 @@
-export interface Book {
-  id?: string;
-  title: string;
-  author: string;
-  isbn: string;
-  publisher: string;
-  genre: string;
-  edition: string;
-  summary: string;
-  numberOfPages: number;
-  quantity: number;
-  price: string;
-  image: string;
-}
+import { Book } from "@/lib/definitions";
 
-export interface Book_v2 {
-  id?: string;
-  title: string;
-  authors: string;
-  publisher: string;
-  publishedDate: string;
-  description: string
-  isbn: string;
-  pageCount: number;
-  printType: string;
-  maturityRating:string;
-  allowAnonLogging: false;
-  contentVersion: string;
-  image: string;
-  language: string;
-  previewLink:string;
-  infoLink: string;
-  canonicalVolumeLink: string;
-  active: boolean;
-  quantity: number;
-  price: number;
-}
-
-
-export const BookIntialState: Book_v2 = {
+export const BookIntialState: Book = {
 	title: "",
 	authors: "",
 	publisher: "",

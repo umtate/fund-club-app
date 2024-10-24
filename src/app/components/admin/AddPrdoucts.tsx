@@ -38,7 +38,7 @@ export function AppProductsComponent() {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
         body: JSON.stringify(values, null, 2),
       })

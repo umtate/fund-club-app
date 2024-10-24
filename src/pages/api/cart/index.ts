@@ -1,4 +1,5 @@
 import { decrypt } from "@/functions";
+import { Cart, CartItem } from "@/lib/definitions";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const CART_URL: string = process.env.CART_BASE_URL || "";
@@ -28,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 const handlePostRequest = async (
   req: NextApiRequest,
   customerId: string
-): Promise<any> => {
+): Promise<Cart | undefined> => {
   try {
     const cartItems = await updateCartPaylod(req, customerId);
     const payload = {
@@ -39,7 +40,7 @@ const handlePostRequest = async (
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(payload),
     });
@@ -52,10 +53,10 @@ const handlePostRequest = async (
 const updateCartPaylod = async (req: NextApiRequest, customerId: string) => {
   const currentCart = await handleGetRequest(customerId);
   const cartItem = req.body;
-  const otherItems =
+  const otherItems : CartItem[] =
     currentCart !== null
       ? currentCart?.cartItems.filter(
-          (items: any) => items.productId !== cartItem?.productId
+          (items: CartItem) => items.productId !== cartItem?.productId
         )
       : [];
   return [...otherItems, cartItem];
@@ -75,17 +76,17 @@ const handleGetRequest = async (customerId: string) => {
   }
 };
 
-const hydrateCartItems = async (items: any) => {
+const hydrateCartItems = async (items: Cart) => {
   try {
     const result = await fetch(`${PRODUCTS_URL}/books-by-id`, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         bookIds: items
-	?.cartItems.map((items: any) => items.productId),
+	?.cartItems.map((items: CartItem) => items.productId),
       }),
     });
     return result.json();

@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funda-club-app
+  namespace: funda-club
+  labels:
+    app: funda-club-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: funda-club-app
+  template:
+    metadata:
+      labels:
+        app: funda-club-app
+    spec:
+      containers:
+        - name: funda-club-app
+          image: localhost:5001/funda-club-app:v3
+          ports:
+            - containerPort: 3000 
+          env:
+            - name: USERS_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: funda-club-app-config
+                  key: USERS_BASE_URL
+            - name: BOOKS_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: funda-club-app-config
+                  key: BOOKS_BASE_URL
+            - name: ORDERS_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: funda-club-app-config
+                  key: ORDERS_BASE_URL
+            - name: CART_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: funda-club-app-config
+                  key: CART_BASE_URL
+            - name: PAYMENTS_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: funda-club-app-config
+                  key: PAYMENTS_BASE_URL
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: funda-club-app-secret
+                  key: APP_SECRET
+            - name: AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: funda-club-app-secret
+                  key: AUTH_TOKEN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: funda-club-app-service
+  namespace: funda-club
+  labels:
+    app: funda-club-app
+spec:
+  type: NodePort 
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: funda-club-app
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: funda-club-app-config
+  namespace: funda-club
+data:
+  USERS_BASE_URL: "http://users-service:8181/api/v1/users"
+  BOOKS_BASE_URL: "http://products-service:8383/api/v1/products"
+  ORDERS_BASE_URL: "http://orders-service:8484/api/v1/orders"
+  CART_BASE_URL: "http://cart-service:8585/api/v1/cart"
+  PAYMENTS_BASE_URL: "http://payments-service:8686/api/v1/payments"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: funda-club-app-secret
+  namespace: funda-club
+type: Opaque
+data:
+  APP_SECRET: dGhpc2lzYW5hcHBzZWNyZXRlCg==  # base64 encoded value of 'secret'
+  AUTH_TOKEN: dG9rZW4K  # base64 encoded value of 'token'
+ 

@@ -1,4 +1,5 @@
 import { decrypt } from "@/functions";
+import { Cart } from "@/lib/definitions";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const CART_URL: string = process.env.CART_BASE_URL || "";
@@ -22,7 +23,7 @@ export default async function handler(
   }
 }
 
-const handlePostRequest = async (req: NextApiRequest, customerId: string): Promise<any> => {
+const handlePostRequest = async (req: NextApiRequest, customerId: string): Promise<Cart | undefined> => {
   try {
     const cart = await handleGetRequest(customerId);
 
@@ -30,7 +31,7 @@ const handlePostRequest = async (req: NextApiRequest, customerId: string): Promi
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(cart),
     });

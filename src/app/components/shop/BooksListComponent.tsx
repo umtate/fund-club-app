@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useRouter } from 'next/navigation'
-import { Book_v2 } from "@/app/types/Book";
+import { Book } from "@/lib/definitions";
 
 interface BookListProps {
-  books: Book_v2[];
+  books: Book[];
 }
 
 export function BooksListComponent ({ books }: BookListProps){

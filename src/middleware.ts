@@ -5,10 +5,10 @@ const AUTH_TOKEN: string = process.env.AUTH_TOKEN || "";
 
 export const middleware = async (req: NextRequest) => {
   try {
-    const token = req.cookies?.get(AUTH_TOKEN)?.value ?? null;
-    if (!token) return invalidToken();
+    // const token = req.cookies?.get(AUTH_TOKEN)?.value ?? null;
+    // if (!token) return invalidToken();
 
-    const user = await decrypt(token);
+    const user = await decrypt("token");
     if (!user) return invalidToken();
 
     return NextResponse.next();

@@ -23,11 +23,12 @@ export default async function handler(
 
 const handlePostRequest = async (request: NextApiRequest) => {
   try {
+    console.log("Books url ", PRODUCTS_URL)
     const result = await fetch(PRODUCTS_URL, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(request.body),
     });
@@ -42,7 +43,7 @@ const handleGetRequest = async () => {
     const result = await fetch(PRODUCTS_URL, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
     });
     return result.json();

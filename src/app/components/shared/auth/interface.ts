@@ -6,11 +6,6 @@ export const initialState: State = {
   token: "",
 };
 
-export interface Action {
-  type: string;
-  payload?: any;
-}
-
 export interface TokensInterface {
   accessToken: string
   accessTokenExpires: Date

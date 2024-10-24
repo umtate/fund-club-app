@@ -11,11 +11,16 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useRouter } from "next/navigation";
-import { Book_v2 } from "@/app/types/Book";
 import { Icons } from "@/components/ui/icons";
+import { Book } from "@/lib/definitions";
 
 interface Props {
-  book: Book_v2;
+  book: Book;
+}
+
+interface IBorrow {
+  productId:string,
+  quantity: number,
 }
 
 export function BookComponent({ book }: Props) {
@@ -23,14 +28,14 @@ export function BookComponent({ book }: Props) {
 
   const router = useRouter();
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IBorrow) => {
     setIsLoading(true);
 
     fetch("/api/cart", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
       body: JSON.stringify(values),
     })
@@ -78,7 +83,7 @@ export function BookComponent({ book }: Props) {
             <Button
               onClick={() => {
                 handleSubmit({
-                  productId: book?.id,
+                  productId: book?.id ?? "",
                   quantity: 1,
                 });
               }}
